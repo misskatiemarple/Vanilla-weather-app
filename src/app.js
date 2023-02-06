@@ -37,13 +37,23 @@ function displayTemperature(response) {
   let date = document.querySelector("#date");
   date.innerHTML = formatDate(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
-  iconElement.setattribute(
+  iconElement.setAttribute(
     "src",
-    "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/${response.data.condition.icon_url}.png`
   );
+  iconElement.setAttribute("alt", response.data.condition.description);
 }
 
-let apiKey = "3041fdbb74ta3a686b2ca3f782407o93";
-let city = "Paris";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-axios.get(apiUrl).then(displayTemperature);
+function search(city) {
+  let apiKey = "3041fdbb74ta3a686b2ca3f782407o93";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
