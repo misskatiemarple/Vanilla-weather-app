@@ -37,10 +37,7 @@ function displayTemperature(response) {
   let date = document.querySelector("#date");
   date.innerHTML = formatDate(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
-  iconElement.setAttribute(
-    "src",
-    `http://shecodes-assets.s3.amazonaws.com/api/weather/${response.data.condition.icon_url}.png`
-  );
+  iconElement.src = response.data.condition.icon_url;
   iconElement.setAttribute("alt", response.data.condition.description);
 }
 
